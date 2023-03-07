@@ -9,8 +9,8 @@ import { UserField } from "../utils/user.utils.js"
 //@route  POST /api/auth/login
 //@access Public
 
-export const authUser = asyncHandler (async (req, res) => {
-	const {email, password} = req.body
+export const authUser = asyncHandler(async (req, res) => {
+	const { email, password } = req.body
 
 	const user = await prisma.user.findUnique({
 		where: {
@@ -23,7 +23,7 @@ export const authUser = asyncHandler (async (req, res) => {
 	// Проверяем валидацию пароля
 	if (user && isValidPassword) {
 		const token = generateToken(user.id)
-		res.json({user, token})
+		res.json({ user, token })
 	} else {
 		res.status(401)
 		throw new Error('Email and password are not correct')
@@ -36,9 +36,9 @@ export const authUser = asyncHandler (async (req, res) => {
 //@route  POST /api/auth/register
 //@access Public
 
-export const registerUser = asyncHandler (async (req, res) => {
+export const registerUser = asyncHandler(async (req, res) => {
 	// Забираем Email и Password
-	const {email, password} = req.body
+	const { email, password } = req.body
 
 	//Проверяем на существование текущего email
 	const isHaveUser = await prisma.user.findUnique({
@@ -56,15 +56,18 @@ export const registerUser = asyncHandler (async (req, res) => {
 	// Создадим нашего Usera
 	const user = await prisma.user.create({
 		data: {
-			email, password: await hash(password), name: faker.name.fullName()
+			email,
+			password: await hash(password),
+			name: faker.name.fullName(),
+			images: ['/images/before.jpg', '/images/after.jpg']
 		},
 		select: UserField
 	})
 
 	// Создаем Token
-const token = generateToken(user.id)
+	const token = generateToken(user.id)
 
-	res.json({user, token})
+	res.json({ user, token })
 })
 
 // GET, POST, PUT, PATH, DELETE

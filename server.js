@@ -9,6 +9,11 @@ import workoutRoutes from './app/workout/workout.routes.js'
 import { prisma } from './app/prisma.js'
 import { errorHandler, notFound } from './app/middleware/error.middleware.js'
 import path from 'path'
+import cors from 'cors'
+
+// [] - Add cors (app.use(cors()) and $ npm install cors)
+// getUserProfile
+// get Workout log and get exercise log exercise
 
 dotenv.config()
 
@@ -17,6 +22,7 @@ const app = express()
 async function main() {
 	if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 
+	app.use(cors())
 	app.use(express.json())
 
 	const __dirname = path.resolve()

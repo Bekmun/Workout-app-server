@@ -10,7 +10,9 @@ export const createNewExercise = asyncHandler(async (req, res) => {
 
 	const exercise = await prisma.exercise.create({
 		data: {
-			name, times, iconPath
+			name,
+			times,
+			iconPath
 		}
 	})
 
@@ -29,7 +31,9 @@ export const updateExercise = asyncHandler(async (req, res) => {
 				id: +req.params.id
 			},
 			data: {
-				name, times, iconPath
+				name,
+				times,
+				iconPath
 			}
 		})
 
